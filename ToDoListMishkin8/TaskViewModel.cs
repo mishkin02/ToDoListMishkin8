@@ -70,7 +70,6 @@ namespace ToDoListMishkin8
             });
 
             DeleteCommand = new Command<ToDoTask>(DeleteTask);
-            EntryNotEmpty = false;
         }
 
         void DeleteTask(ToDoTask task)
