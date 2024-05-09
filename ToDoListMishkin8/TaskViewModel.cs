@@ -1,7 +1,12 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace ToDoListMishkin8
 {
@@ -9,7 +14,7 @@ namespace ToDoListMishkin8
     {
         string name = "";
         private bool check = false;
-        bool entryNotEmpty = true;
+        bool entryNotEmpty = false;
 
         public event PropertyChangedEventHandler? PropertyChanged;
         public Command AddCommand { get; }
@@ -32,7 +37,7 @@ namespace ToDoListMishkin8
             set
             {
                 name = value;
-                if (string.IsNullOrWhiteSpace(name))
+                if (string.IsNullOrEmpty(name))
                 {
                     EntryNotEmpty = false;
                 }
@@ -41,7 +46,6 @@ namespace ToDoListMishkin8
                     EntryNotEmpty = true;
                 }
                 OnPropertyChanged();
-                (AddCommand as Command).ChangeCanExecute();
             }
         }
 
@@ -56,19 +60,15 @@ namespace ToDoListMishkin8
 
         public TaskViewModel()
         {
-            AddCommand = new Command(
-                execute: () =>
-                {
-                    var a = new ToDoTask(Name, Check);
-                    Tasks.Add(a);
-                    //a.Name = "123";
-                    Name = "";
-                    Check = false;
-                },
-                canExecute: () =>
-                {
-                    return EntryNotEmpty;
-                });
+            AddCommand = new Command(() =>
+            {
+                var a = new ToDoTask(Name, Check);
+                Tasks.Add(a);
+                a.Name = "123";
+                Name = "";
+                Check = false;
+            });
+
             DeleteCommand = new Command<ToDoTask>(DeleteTask);
         }
 

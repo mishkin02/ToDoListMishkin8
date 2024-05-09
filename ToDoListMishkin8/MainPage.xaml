@@ -14,7 +14,8 @@
                     WidthRequest="100"  
                     Margin="10,0,0,0" 
                     BackgroundColor="#366029"
-                    Command="{Binding AddCommand}"/>
+                    Command="{Binding AddCommand}"
+                    IsEnabled="{Binding EntryNotEmpty}"/>
         </HorizontalStackLayout>
 
         <ListView x:Name="tasksListView" ItemsSource="{Binding Tasks}" Margin="10" >
